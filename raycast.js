@@ -18,11 +18,10 @@ function rotateVec(vec, angle) {
   vec.x = (vec.x * Math.cos(angle)) - (vec.y * Math.sin(angle));
   vec.y = (hX * Math.sin(angle)) + (vec.y * Math.cos(angle));
 }
-// calculateIntersect : Uses player position and rays rays that
-//                    : were calculated inside the camera plane
+// calculateIntersect : Uses player position and rays that were
+//                    : calculated inside the camera plane
 //                    : to determine where ray collision occurs
-//                    : on any given map array relative to the
-//                    : player
+//                    : on any given map array
 function calculateIntersect(map, pX, pY, rX, rY, cam) {
   // mapX/Y is the player position relative to the map grid
   let mapX = Math.floor(pX),
@@ -85,6 +84,8 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 // --------------
 // Game variables
 // --------------
+var oTime = 0;
+
 var player = {
   x : 0, y : 0,
   dir : {
@@ -99,8 +100,8 @@ var camera = {
 var mapStart = true;
 var maps = {
   debug : {
-    w : 10, pX : 1.2,
-    h : 10, pY : 1.2,
+    w : 10, pX : 4.5,
+    h : 10, pY : 3.4,
     walls : [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -120,6 +121,12 @@ var maps = {
 // Main loop
 // --------------
 function main(cTime) {
+  // Calculate dTime and FPS
+  let dTime = cTime - oTime;
+  let fps = 1 / (dTime / 1000);
+  oTime = cTime;
+
+
   // On map start
   if (mapStart) {
     player.x = maps.debug.pX;
@@ -128,13 +135,13 @@ function main(cTime) {
   }
 
   // Debug testing, rotate player
-  rotateVec(player.dir, -0.01);
-  rotateVec(camera, -0.01);
+  rotateVec(player.dir, 0.04);
+  rotateVec(camera, 0.04);
 
   // Clear screen
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "black";
 
   // Update raycast
   for (let i = 0; i < canvas.width; ++i) {
@@ -161,6 +168,9 @@ function main(cTime) {
     ctx.lineTo(i, drawE);
     ctx.stroke();
   }
+
+  ctx.font = "30px Arial";
+  ctx.fillText(Math.round(fps).toString() + "fps", 0, 34);
 
   // Continue loop
   window.requestAnimationFrame(main);
