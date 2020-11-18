@@ -84,34 +84,48 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 // --------------
 // Game variables
 // --------------
+// spritesheet variables and texture setup
+var texSheet = new Image(),
+  spriteSheet = new Image();
+texSheet.src = "textures.png";
+spriteSheet.src = "sprites.png";
+var texCtx = document.createElementById("canvas");
+texCtx.width = texSheet.width;
+texCtx.height = texSheet.height;
+texCtx.getContext("2d").drawImage(texSheet, 0, 0, texSheet.width, texSheet.height);
+var texCoords = texCtx.getImageData(0, 0, texSheet.width, texSheet.height).data;
+// oldTime, used for getting delta time
 var oTime = 0;
-
+// player object, contains a position and direction vector
 var player = {
   x : 0, y : 0,
   dir : {
     x: -1, y : 0
   }
 }
+// camera object, contains a plane vector (to be doubled) and flags to
+// alter any projected content on the screen
 var camera = {
-  x : 0, y : 0.85,
+  x : 0, y : 0.78,
   axisFlag : 0
 }
-
+// various map flags, variables and objects with individual map arrays and
+// level starting positions
 var mapStart = true;
 var maps = {
   debug : {
-    w : 10, pX : 4.5,
-    h : 10, pY : 3.4,
+    w : 10, pX : 3,
+    h : 10, pY : 3,
     walls : [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 1, 0, 1, 0, 0, 0, 0, 0, 1,
       1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
       1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
       1, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-      1, 0, 0, 0, 1, 0, 0, 0, 0, 1,
       1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 1, 0, 1, 1,
+      1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1
     ]
   }
@@ -126,7 +140,6 @@ function main(cTime) {
   let fps = 1 / (dTime / 1000);
   oTime = cTime;
 
-
   // On map start
   if (mapStart) {
     player.x = maps.debug.pX;
@@ -135,8 +148,8 @@ function main(cTime) {
   }
 
   // Debug testing, rotate player
-  rotateVec(player.dir, 0.04);
-  rotateVec(camera, 0.04);
+  rotateVec(player.dir, 0.02);
+  rotateVec(camera, 0.02);
 
   // Clear screen
   ctx.fillStyle = "white";
@@ -158,15 +171,15 @@ function main(cTime) {
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
 
-    // ToDo: Remove magic numbers and replace with texture mapping
-    let col = ((wallDist * 5) / 255) + (camera.axisFlag ? 20 : 0);
-    ctx.strokeStyle = "rgb(" + (col + 150).toString() + ", " + col.toString() + ", " + col.toString() + ")";
+    for (let d = drawS; d < drawE; ++d) {
 
-    // Draw the ray
-    ctx.beginPath();
-    ctx.moveTo(i, drawS);
-    ctx.lineTo(i, drawE);
-    ctx.stroke();
+
+        // Draw the ray
+        ctx.beginPath();
+        ctx.moveTo(i, drawS);
+        ctx.lineTo(i, drawE);
+        ctx.stroke();
+    }
   }
 
   ctx.font = "30px Arial";
