@@ -84,11 +84,6 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 // --------------
 // Game variables
 // --------------
-// spritesheet and texture setup
-var texSheet = new Image(),
-  spriteSheet = new Image();
-texSheet.src = "textures.png";
-spriteSheet.src = "sprites.png";
 // oldTime, used for getting delta time
 var oTime = 0;
 // player object, contains a position and direction vector
@@ -166,11 +161,6 @@ function main(cTime) {
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
 
-    /*for (let d = drawS; d < drawE; ++d) {
-
-
-    }*/
-    // Draw the ray
     ctx.beginPath();
     ctx.moveTo(i, drawS);
     ctx.lineTo(i, drawE);
