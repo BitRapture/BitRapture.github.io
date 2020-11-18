@@ -93,7 +93,7 @@ var texCtx = document.createElement("canvas");
 texCtx.width = texSheet.width;
 texCtx.height = texSheet.height;
 texCtx.getContext("2d").drawImage(texSheet, 0, 0, texSheet.width, texSheet.height);
-var texCoords = texCtx.getContext("2d").getImageData(0, 0, texSheet.width, texSheet.height).data;
+//var texCoords = texCtx.getContext("2d").getImageData(0, 0, texSheet.width, texSheet.height).data;
 // oldTime, used for getting delta time
 var oTime = 0;
 // player object, contains a position and direction vector
