@@ -93,7 +93,7 @@ var texCtx = document.createElement("canvas");
 texCtx.width = texSheet.width;
 texCtx.height = texSheet.height;
 texCtx.getContext("2d").drawImage(texSheet, 0, 0, texSheet.width, texSheet.height);
-//var texCoords = texCtx.getContext("2d").getImageData(0, 0, texSheet.width, texSheet.height).data;
+var texCoords = texCtx.getContext("2d").getImageData(0, 0, texSheet.width, texSheet.height).data;
 // oldTime, used for getting delta time
 var oTime = 0;
 // player object, contains a position and direction vector
@@ -171,15 +171,15 @@ function main(cTime) {
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
 
-    for (let d = drawS; d < drawE; ++d) {
+    /*for (let d = drawS; d < drawE; ++d) {
 
 
-        // Draw the ray
-        ctx.beginPath();
-        ctx.moveTo(i, drawS);
-        ctx.lineTo(i, drawE);
-        ctx.stroke();
-    }
+    }*/
+    // Draw the ray
+    ctx.beginPath();
+    ctx.moveTo(i, drawS);
+    ctx.lineTo(i, drawE);
+    ctx.stroke();
   }
 
   ctx.font = "30px Arial";
