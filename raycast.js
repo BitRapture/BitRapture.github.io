@@ -130,7 +130,7 @@ function main(cTime) {
     let drawS = -wallDist / 2 + canvas.height / 2,
       drawE = wallDist / 2 + canvas.height / 2;
     if (drawS < 0) drawS = 0;
-    if (drawE >= canvas.height) drawE = canvas.height - 1;
+    if (drawE > canvas.height) drawE = canvas.height;
 
     let col = ((wallDist * 5) / 255) + (camera.axisFlag ? 20 : 0);
     ctx.strokeStyle = "rgb(" + (col + 150).toString() + ", " + col.toString() + ", " + col.toString() + ")";
