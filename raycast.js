@@ -80,15 +80,42 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 
   return -1;
 }
+// drawImgPixel : Draws a pixel from an image object onto the main
+//              : canvas
+function drawImgPixel(img, palette, iX, iY, cX, cY) {
+  ctx.fillStyle = palette[img.map[getI(iX, iY, img.size)]];
+}
 
 // --------------
 // Game variables
 // --------------
-// spritesheet and texture setup
-var texSheet = new Image(),
-  spriteSheet = new Image();
-texSheet.src = "textures.png";
-spriteSheet.src = "sprites.png";
+// media, collection of textures and color palettes
+var media = {
+  palettes : [
+    ["#4b692f", "#6abe30"]
+  ],
+  textures : [
+    { size : 16,
+      map : [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+      ] }
+  ]
+}
+
 // oldTime, used for getting delta time
 var oTime = 0;
 // player object, contains a position and direction vector
@@ -160,25 +187,35 @@ function main(cTime) {
       rayY = player.dir.y + camera.y * seg;
 
     // Calculate intersection and clamp the value inside of the canvas
-    let wallDist = canvas.height / calculateIntersect(maps.debug, player.x, player.y, rayX, rayY, camera);
+    let rawIntersection = calculateIntersect(maps.debug, player.x, player.y, rayX, rayY, camera);
+    let wallDist = canvas.height / rawIntersection,
+      wallPerc = (!camera.axisFlag ? player.y + rawIntersection * rayY :  player.x + rawIntersection * rayX);
+    wallPerc -= Math.floor(wallPerc);
+
     let drawS = -wallDist / 2 + canvas.height / 2,
       drawE = wallDist / 2 + canvas.height / 2;
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
 
-    /*for (let d = drawS; d < drawE; ++d) {
+    let tStep = 16 / wallDist;
+    let tX = Math.floor(wallPerc * 16),
+      tS = (drawS - canvas.height / 2 + wallDist / 2) * tStep;
+    if (!camera.axisFlag && rayX > 0 || camera.axisFlag && rayY < 0)
+      tX = 16 - tX - 1;
 
+    for (let d = drawS; d < drawE; ++d) {
+      let tY = Math.floor(tS) & 15;
+      tS += tStep;
 
-    }*/
+      drawImgPixel(media.textures[0], media.palettes[0], tX, tY, i, d);
+    }
     // Draw the ray
-    ctx.beginPath();
-    ctx.moveTo(i, drawS);
-    ctx.lineTo(i, drawE);
-    ctx.stroke();
+
+    ctx.font = "30px Arial";
+    ctx.fillText(Math.round(fps).toString() + "fps", 0, 34);
   }
 
-  ctx.font = "30px Arial";
-  ctx.fillText(Math.round(fps).toString() + "fps", 0, 34);
+  //return 0;
 
   // Continue loop
   window.requestAnimationFrame(main);
