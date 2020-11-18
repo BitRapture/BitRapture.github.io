@@ -7,123 +7,139 @@ const ctx = canvas.getContext("2d");
 // --------------
 // Functions
 // --------------
-// toDeg : input degrees, output radians
-//       : returns (radians)
-function toRad(degrees) {
-  return degrees * Math.PI / 180;
+// getI : return the index for any 2D 1D array
+function getI(x, y, aW) {
+  return aW * x + y;
 }
-// checkMapVIntersect : returns distance of vertical intersection
-//                    : returns (intersection ? distance : -1)
-function checkMapVIntersect(map, mW, mH, mapHW, pX, pY, cAngle, maxIntersects) {
-  let aY = (Math.floor(pY / mapHW) * mapHW) + (cAngle < 180 ? -1 : mapHW),
-    aYM = (cAngle < 180 ? -mapHW : mapHW);
-  let aX = pX + (Math.abs(pY - aY) / Math.tan(toRad(cAngle))),
-    aXM = mapHW / Math.tan(toRad(cAngle));
 
-  let i = 0, intersection = false;
-  do {
-    let mapX = Math.floor(aX / mapHW),
-      mapY = Math.floor(aY / mapHW);
+function rotateVec(vec, angle) {
+  let hX = vec.x;
+  vec.x = (vec.x * Math.cos(angle)) - (vec.y * Math.sin(angle));
+  vec.y = (hX * Math.sin(angle)) + (vec.y * Math.cos(angle));
+}
 
-    if (mapX >= mW || mapX < 0 || mapY >= mH || mapY < 0)
-      break;
+function calculateIntersect(map, pX, pY, rX, rY, cam) {
+  let mapX = Math.floor(pX),
+    mapY = Math.floor(pY),
+    sX = (rX < 0 ? -1 : 1), sY = (rY < 0 ? -1 : 1);
+  let drX = Math.abs(1 / rX),
+    drY = Math.abs(1 / rY);
+  let sDistX = 0, sDistY = 0;
 
-    if (map[(mapY * mH) + mapX]) {
-      intersection = true;
-      break;
+  if (sX === -1) {
+    sDistX = (pX - mapX) * drX;
+  } else {
+    sDistX = ((mapX + 1) - pX) * drX;
+  }
+  if (sY === -1) {
+    sDistY = (pY - mapY) * drY;
+  } else {
+    sDistY = ((mapY + 1) - pY) * drY;
+  }
+
+  let axis = 0, intersect = false;
+  while (mapX < map.w && mapX >= 0 && mapY < map.h && mapY >= 0) {
+    if (sDistX < sDistY) {
+      sDistX += drX;
+      mapX += sX;
+      axis = 0;
+    } else {
+      sDistY += drY;
+      mapY += sY;
+      axis = 1;
     }
 
-    aY += aYM;
-    aX += aXM;
-    i++;
-  } while (i < maxIntersects);
-
-  if (intersection)
-    return Math.sqrt(Math.pow(pX - aX, 2) + Math.pow(pY - aY, 2));
-  return -1;
-}
-// checkMapHIntersect : returns distance of vertical intersection
-//                    : returns (intersection ? distance : -1)
-function checkMapHIntersect(map, mW, mH, mapHW, pX, pY, cAngle, maxIntersects) {
-  let d = (cAngle > 90 || cAngle < 270 ? -1 : 1);
-  let aX = (Math.floor(pX / mapHW) * mapHW) + (d === 1 ? mapHW : d),
-    aXM = mapHW * d;
-  let aY = pY + (Math.abs(pX - aX) * Math.tan(toRad(cAngle))),
-    aYM = mapHW * Math.tan(toRad(cAngle));
-
-  let i = 0, intersection = false;
-  do {
-    let mapX = Math.floor(aX / mapHW),
-      mapY = Math.floor(aY / mapHW);
-
-    if (mapX >= mW || mapX < 0 || mapY >= mH || mapY < 0)
-      break;
-
-    if (map[(mapY * mH) + mapX]) {
-      intersection = true;
+    if (map.walls[getI(mapX, mapY, map.w)] !== 0) {
+      intersect = true;
       break;
     }
+  }
+  cam.axisFlag = axis;
 
-    aY += aYM;
-    aX += aXM;
-    i++;
-  } while (i < maxIntersects);
+  if (intersect) {
+    if (!axis) {
+      return (mapX - pX + (1 - sX) / 2) / rX;
+    } else {
+      return (mapY - pY + (1 - sY) / 2) / rY;
+    }
+  }
 
-  if (intersection)
-    return Math.sqrt(Math.pow(pX - aX, 2) + Math.pow(pY - aY, 2));
   return -1;
-}
-// returnMapIntersect : returns the shortest distance from both intersection functions
-//                    : returns (distance)
-function returnMapIntersect(map, mW, mH, mapHW, pX, pY, cAngle, maxIntersects) {
-  let v = checkMapVIntersect(map, mW, mH, mapHW, pX, pY, cAngle, maxIntersects),
-    h = checkMapHIntersect(map, mW, mH, mapHW, pX, pY, cAngle, maxIntersects);
-  return (v > 0 && v < h ? v : h);
 }
 
 // --------------
 // Game variables
 // --------------
-var playerAngle = 45, playerX = 130, playerY = 124,
-  playerFOV = 80;
+var player = {
+  x : 0, y : 0,
+  dir : {
+    x: -1, y : 0
+  }
+}
+var camera = {
+  x : 0, y : 0.85,
+  axisFlag : 0
+}
 
-var cUnit = playerFOV / canvas.width,
-  cDistance = (canvas.width / 2) / Math.tan(toRad(playerFOV / 2));
-
-console.log(cDistance);
-
-var mapWH = 64;
-var map = [
-  1, 1, 1, 1, 1,
-  1, 0, 0, 0, 1,
-  1, 0, 0, 0, 1,
-  1, 0, 0, 0, 1,
-  1, 1, 1, 1, 1
-];
+var mapStart = true;
+var maps = {
+  debug : {
+    w : 10, pX : 1.2,
+    h : 10, pY : 1.2,
+    walls : [
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+      1, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+      1, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+    ]
+  }
+}
 
 // --------------
 // Main loop
 // --------------
 function main(cTime) {
+  // On map start
+  if (mapStart) {
+    player.x = maps.debug.pX;
+    player.y = maps.debug.pY;
+    mapStart = false;
+  }
+
+  rotateVec(player.dir, -0.01);
+  rotateVec(camera, -0.01);
+
+  // Clear screen
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "red";
 
-  playerAngle += 0.6;
-  if (playerAngle >= 360) playerAngle = 0;
-
   // Update raycast
-  let cAngle = (playerAngle - (playerFOV / 2) < 0 ? 360 + (playerAngle - (playerFOV / 2)) : playerAngle - (playerFOV / 2));
-  let i = 0;
-  do {
-    let v = returnMapIntersect(map, 5, 5, mapWH, playerX, playerY, cAngle, 4);
-    let tV = mapWH / v * 255;
+  for (let i = 0; i < canvas.width; ++i) {
+    let seg = 2 * i / canvas.width - 1;
+    let rayX = player.dir.x + camera.x * seg,
+      rayY = player.dir.y + camera.y * seg;
 
-    ctx.fillRect(i, (canvas.height / 2) - (tV / 2), i + 1, tV);
+    let wallDist = canvas.height / calculateIntersect(maps.debug, player.x, player.y, rayX, rayY, camera);
+    let drawS = -wallDist / 2 + canvas.height / 2,
+      drawE = wallDist / 2 + canvas.height / 2;
+    if (drawS < 0) drawS = 0;
+    if (drawE >= canvas.height) drawE = canvas.height - 1;
 
-    cAngle = (cAngle + cUnit > 360 ? (cAngle + cUnit) - 360 : cAngle + cUnit);
-    i++;
-  } while (i < canvas.width);
+    let col = ((wallDist * 5) / 255) + (camera.axisFlag ? 20 : 0);
+    ctx.strokeStyle = "rgb(" + (col + 150).toString() + ", " + col.toString() + ", " + col.toString() + ")";
+
+    ctx.beginPath();
+    ctx.moveTo(i, drawS);
+    ctx.lineTo(i, drawE);
+    ctx.stroke();
+  }
 
   // Continue loop
   window.requestAnimationFrame(main);
