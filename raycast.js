@@ -2,7 +2,9 @@
 // Constants
 // --------------
 const canvas = document.getElementById("rayCastCTX");
+const canvasHud = document.getElementById("hudCTX");
 const ctx = canvas.getContext("2d");
+const hudCtx = canvasHud.getContext("2d");
 
 // --------------
 // Functions
@@ -84,6 +86,10 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 // --------------
 // Game variables
 // --------------
+var hudElements = {
+  background : new Image()
+}
+hudElements.background.src = "hud.png";
 // oldTime, used for getting delta time
 var oTime = 0;
 // player object, contains a position and direction vector
@@ -167,8 +173,12 @@ function main(cTime) {
     ctx.stroke();
   }
 
+  // Debug fps counter
   ctx.font = "30px Arial";
   ctx.fillText(Math.round(fps).toString() + "fps", 0, 34);
+
+  // Update HUD
+  hudCtx.drawImage(hudElements.background, 0, 0);
 
   // Continue loop
   window.requestAnimationFrame(main);
