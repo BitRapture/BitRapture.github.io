@@ -86,6 +86,7 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 // --------------
 // Game variables
 // --------------
+// HUD media
 var hudElements = {
   background : new Image()
 }
@@ -126,6 +127,28 @@ var maps = {
     ]
   }
 }
+// Keypress logger
+var kPL = {
+  keys : [],
+  log(key) {
+    if (!this.keys.includes(key))
+      this.keys.push(key);
+  },
+  unlog(key) {
+    let find = this.keys.indexOf(key);
+    if (find !== -1)
+      this.keys.splice(find, 1);
+  },
+  keyPressed(key) {
+    return this.keys.includes(key);
+  }
+};
+
+// --------------
+// Event Listeners
+// --------------
+document.addEventListener("keydown", e => kPL.log(e.code));
+document.addEventListener("keyup", e => kPL.unlog(e.code));
 
 // --------------
 // Main loop
@@ -144,8 +167,17 @@ function main(cTime) {
   }
 
   // Debug testing, rotate player
-  rotateVec(player.dir, 0.02);
-  rotateVec(camera, 0.02);
+  //rotateVec(player.dir, 0.02);
+  //rotateVec(camera, 0.02);
+
+  let dM = kPL.keyPressed("ArrowUp") - kPL.keyPressed("ArrowDown");
+  let dR = kPL.keyPressed("ArrowLeft") - kPL.keyPressed("ArrowRight");
+
+  rotateVec(player.dir, 0.02 * dR);
+  rotateVec(camera, 0.02 * dR);
+
+  player.x += (player.dir.x * 0.03) * dM;
+  player.y += (player.dir.y * 0.03) * dM;
 
   // Clear screen
   ctx.fillStyle = "white";
@@ -153,7 +185,7 @@ function main(cTime) {
   ctx.fillStyle = "black";
 
   // Update raycast
-  for (let i = 0; i < canvas.width; ++i) {
+  for (let i = 0; i < canvas.width + 1; ++i) {
     // Calculate segment relative to camera view
     let seg = 2 * i / canvas.width - 1;
     // Casts ray inside of camera view
@@ -166,11 +198,20 @@ function main(cTime) {
       drawE = wallDist / 2 + canvas.height / 2;
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
+    let colSeg = canvas.height / (drawE / 20);
 
+    ctx.strokeStyle = `rgb(${(camera.axisFlag ? 200 : 255)}, 0, 0)`;
     ctx.beginPath();
     ctx.moveTo(i, drawS);
-    ctx.lineTo(i, drawE);
+    ctx.lineTo(i, drawE + 1);
     ctx.stroke();
+    if (drawE < canvas.height) {
+      ctx.strokeStyle = `rgb(0, 0, 200)`;
+      ctx.beginPath();
+      ctx.moveTo(i, colSeg * 20);
+      ctx.lineTo(i, drawE);
+      ctx.stroke();
+    }
   }
 
   // Debug fps counter
