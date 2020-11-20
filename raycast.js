@@ -180,9 +180,11 @@ function main(cTime) {
   player.y += (player.dir.y * 0.03) * dM;
 
   // Clear screen
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "grey";
+  ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
+
+  ctx.fillStyle = "blue";
+  ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
 
   // Update raycast
   for (let i = 0; i < canvas.width + 1; ++i) {
@@ -198,20 +200,13 @@ function main(cTime) {
       drawE = wallDist / 2 + canvas.height / 2;
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
-    let colSeg = canvas.height / (drawE / 20);
 
     ctx.strokeStyle = `rgb(${(camera.axisFlag ? 200 : 255)}, 0, 0)`;
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(i, drawS);
     ctx.lineTo(i, drawE + 1);
     ctx.stroke();
-    if (drawE < canvas.height) {
-      ctx.strokeStyle = `rgb(0, 0, 200)`;
-      ctx.beginPath();
-      ctx.moveTo(i, colSeg * 20);
-      ctx.lineTo(i, drawE);
-      ctx.stroke();
-    }
   }
 
   // Debug fps counter
