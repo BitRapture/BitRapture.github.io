@@ -139,6 +139,10 @@ var kPL = {
     if (find !== -1)
       this.keys.splice(find, 1);
   },
+  checkFocus() {
+    if (!document.hasFocus() && this.keys.length > 0)
+      this.keys = [];
+  },
   keyPressed(key) {
     return this.keys.includes(key);
   }
@@ -166,24 +170,23 @@ function main(cTime) {
     mapStart = false;
   }
 
-  // Debug testing, rotate player
-  //rotateVec(player.dir, 0.02);
-  //rotateVec(camera, 0.02);
+  // Make sure document is focused for keys
+  kPL.checkFocus();
 
+  // Get delta movement and delta rotation
   let dM = kPL.keyPressed("ArrowUp") - kPL.keyPressed("ArrowDown");
   let dR = kPL.keyPressed("ArrowLeft") - kPL.keyPressed("ArrowRight");
-
+  // Apply movement and rotation
   rotateVec(player.dir, 0.02 * dR);
   rotateVec(camera, 0.02 * dR);
-
   player.x += (player.dir.x * 0.03) * dM;
   player.y += (player.dir.y * 0.03) * dM;
 
-  // Clear screen
-  ctx.fillStyle = "grey";
+  // Clear screen (add ceiling)
+  ctx.fillStyle = "rgb(80, 80, 80)";
   ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
-
-  ctx.fillStyle = "blue";
+  // Add floor
+  ctx.fillStyle = "rgb(50, 50, 50)";
   ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
 
   // Update raycast
@@ -200,8 +203,9 @@ function main(cTime) {
       drawE = wallDist / 2 + canvas.height / 2;
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
+    let wallCol = ((wallDist / (camera.axisFlag ? 200 : 255)) * 255);
 
-    ctx.strokeStyle = `rgb(${(camera.axisFlag ? 200 : 255)}, 0, 0)`;
+    ctx.strokeStyle = `rgb(${wallCol}, ${wallCol}, ${wallCol})`;
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(i, drawS);
