@@ -207,8 +207,8 @@ function main(cTime) {
   }
 
   // Debug fps counter
-  ctx.font = "30px Arial";
-  ctx.fillText(Math.round(fps).toString() + "fps", 0, 34);
+  //ctx.font = "30px Arial";
+  //ctx.fillText(Math.round(fps).toString() + "fps", 0, 34);
 
   // Continue loop
   window.requestAnimationFrame(main);
