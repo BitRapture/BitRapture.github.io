@@ -25,13 +25,20 @@ iframe {
   height: 70px;
   min-height: 70px;
   background-color: white;
+  border-bottom: black solid 3px;
   padding-left: 15px;
   padding-right: 15px;
   flex-direction: row;
-  justify-content: space-around;
 }
 
-#header .container {}
+#header .container {
+  flex-grow: 1;
+}
+
+#navButton {
+  margin-top: 10px;
+  width: 50px;
+}
 
 #flexBox #main {
   display: flex;
@@ -40,9 +47,10 @@ iframe {
 }
 
 #main #navList {
-  width: 120px;
-  min-width: 120px;
+  width: 0px;
+  min-width: 0px;
   background-color: white;
+  visibility: hidden;
 }
 
 #main #content {
@@ -53,5 +61,6 @@ iframe {
   height: 15px;
   min-height: 15px;
   background-color: white;
+  border-top: black solid 3px;
   padding: 15px;
 }
