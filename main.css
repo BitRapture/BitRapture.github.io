@@ -2,6 +2,7 @@ html {
   height: 100%;
 }
 body {
+  font-family: "Lucida Console", monospace;
   background-color: black;
   margin: 0;
   padding: 0;
@@ -20,10 +21,17 @@ iframe {
 }
 
 #flexBox #header {
-  height: 100px;
-  min-height: 100px;
+  display: flex;
+  height: 70px;
+  min-height: 70px;
   background-color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+  flex-direction: row;
+  justify-content: space-around;
 }
+
+#header .container {}
 
 #flexBox #main {
   display: flex;
@@ -33,17 +41,17 @@ iframe {
 
 #main #navList {
   width: 120px;
-  min-width: 60px;
+  min-width: 120px;
   background-color: white;
 }
 
 #main #content {
   flex-grow: 1;
-  text-align: center;
 }
 
 #flexBox #footer {
-  height: 100px;
-  min-height: 100px;
+  height: 15px;
+  min-height: 15px;
   background-color: white;
+  padding: 15px;
 }
