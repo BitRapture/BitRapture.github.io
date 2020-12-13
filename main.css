@@ -3,6 +3,7 @@ html {
 }
 body {
   font-family: "Lucida Console", monospace;
+  color: black;
   background-color: black;
   margin: 0;
   padding: 0;
@@ -29,6 +30,7 @@ iframe {
   padding-left: 15px;
   padding-right: 15px;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #header .container {
@@ -40,9 +42,14 @@ iframe {
   width: 50px;
 }
 
+#themeButton {
+  margin-top: 10px;
+  width: 50px;
+}
+
 #flexBox #main {
   display: flex;
-  flex-grow: 1;
+  flex-grow: 2;
   flex-direction: row;
 }
 
