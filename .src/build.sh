@@ -10,7 +10,7 @@ read V_EXPORT
 
 # Create new file and sandwich the content file between header.html and footer.html
 cat "templates/header.html" > "${V_EXPORT}.html"
-cat "page_content/${V_CONTENT}.html" | sed "s/__TITLE__/$V_TITLE/" >> "${V_EXPORT}.html"
+cat "page_content/${V_CONTENT}.html" | sed "s/__TITLE__/$V_TITLE/g" >> "${V_EXPORT}.html"
 cat "templates/footer.html" >> "${V_EXPORT}.html"
 
 # Output success if no error is thrown
