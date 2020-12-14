@@ -37,12 +37,8 @@ iframe {
   flex-grow: 1;
 }
 
+#themeButton,
 #navButton {
-  margin-top: 10px;
-  width: 50px;
-}
-
-#themeButton {
   margin-top: 10px;
   width: 50px;
 }
@@ -54,9 +50,11 @@ iframe {
 }
 
 #main #navList {
+  display: flex;
   width: 0px;
   min-width: 0px;
   background-color: white;
+  flex-direction: column;
   visibility: hidden;
 }
 
