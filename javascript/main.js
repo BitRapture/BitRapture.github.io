@@ -2,41 +2,33 @@ const colorA = "black";
 const colorB = "white";
 
 function toggleNavList() {
+  let root = document.documentElement;
+  let rootColor = root.style.getPropertyValue("--primary-color");
   let nav = document.getElementById("navList");
   let navB = document.getElementById("navButton");
-  let theme = (document.body.style.color === colorA || document.body.style.color === "");
   if (nav.style.visibility === "hidden" || nav.style.visibility === "") {
     nav.style.visibility = "visible";
     nav.style.width = "200px";
     nav.style.minWidth = "200px";
-    navB.src = "media/buttons/navListButtonClose"+ (theme ? "" : "Light") +".png";
+    navB.src = "media/buttons/navListButtonClose"+ ( rootColor === colorA || rootColor === "" ? "" : "Light") +".png";
   } else {
     nav.style.visibility = "hidden";
     nav.style.width = "0px";
     nav.style.minWidth = "0px";
-    navB.src = "media/buttons/navListButtonOpen"+ (theme ? "" : "Light") +".png";
+    navB.src = "media/buttons/navListButtonOpen"+ ( rootColor === colorA || rootColor === "" ? "" : "Light") +".png";
   }
 }
 
 function toggleTheme() {
+  let root = document.documentElement;
   let nav = document.getElementById("navList");
   let navB = document.getElementById("navButton");
   let themeB = document.getElementById("themeButton");
-  let header = document.getElementById("header");
-  let footer = document.getElementById("footer");
-  let toggleB = (document.body.style.color === colorB ? colorA : colorB);
-  let toggleF = (document.body.style.color === colorB ? colorB : colorA);
+  let toggleB = (root.style.getPropertyValue("--primary-color") === colorB ? colorA : colorB);
+  let toggleF = (toggleB === colorB ? colorA : colorB);
 
-  document.body.style.color = toggleB;
-  document.body.style.backgroundColor = toggleB;
-  nav.style.backgroundColor = toggleF;
-  nav.style.color = toggleB;
-  header.style.backgroundColor = toggleF;
-  header.style.color = toggleB;
-  header.style.borderBottomColor = toggleB;
-  footer.style.backgroundColor = toggleF;
-  footer.style.color = toggleB;
-  footer.style.borderTopColor = toggleB;
+  root.style.setProperty("--primary-color", toggleB);
+  root.style.setProperty("--secondary-color", toggleF);
 
   if (nav.style.visibility === "hidden" || nav.style.visibility === "") {
     navB.src = "media/buttons/navListButtonOpen"+ (toggleB === colorA ? "" : "Light") +".png";
