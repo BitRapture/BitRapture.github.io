@@ -9,12 +9,12 @@ function toggleNavList() {
     nav.style.visibility = "visible";
     nav.style.width = "200px";
     nav.style.minWidth = "200px";
-    navB.src = "NavButton2"+ (theme ? "" : " Light") +".png";
+    navB.src = "media/buttons/navListButtonClose"+ (theme ? "" : "Light") +".png";
   } else {
     nav.style.visibility = "hidden";
     nav.style.width = "0px";
     nav.style.minWidth = "0px";
-    navB.src = "NavButton1"+ (theme ? "" : " Light") +".png";
+    navB.src = "media/buttons/navListButtonOpen"+ (theme ? "" : "Light") +".png";
   }
 }
 
@@ -39,14 +39,14 @@ function toggleTheme() {
   footer.style.borderTopColor = toggleB;
 
   if (nav.style.visibility === "hidden" || nav.style.visibility === "") {
-    navB.src = "NavButton1"+ (toggleB === colorA ? "" : " Light") +".png";
+    navB.src = "media/buttons/navListButtonOpen"+ (toggleB === colorA ? "" : "Light") +".png";
   } else {
-    navB.src = "NavButton2"+ (toggleB === colorA ? "" : " Light") +".png";
+    navB.src = "media/buttons/navListButtonClose"+ (toggleB === colorA ? "" : "Light") +".png";
   }
 
   if (toggleB === colorA) {
-    themeB.src = "LightMode1.png";
+    themeB.src = "media/buttons/themeButtonOff.png";
   } else {
-    themeB.src = "LightMode2.png";
+    themeB.src = "media/buttons/themeButtonOn.png";
   }
 }
