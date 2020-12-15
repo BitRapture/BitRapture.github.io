@@ -13,7 +13,7 @@ read V_TITLE
 
 # Create new file and sandwich the content file between header.html and footer.html
 # Optional: add an include.html file that allows for css and js to be added to separate pages
-cat "templates/headerIncludes.html" > "${V_NAME}.html"
+cat "templates/headerIncludes.html" | sed "s/__TITLE__/$V_TITLE/g" > "${V_NAME}.html"
 if [ -a "page_includes/i_${V_NAME}.html" ]
 then
   cat "page_includes/i_${V_NAME}.html" >> "${V_NAME}.html"

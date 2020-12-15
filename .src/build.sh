@@ -12,7 +12,7 @@ read V_EXPORT
 
 # Create new file and sandwich the content file between header.html and footer.html
 # Optional: add an include.html file that allows for css and js to be added to separate pages
-cat "templates/headerIncludes.html" > "${V_EXPORT}.html"
+cat "templates/headerIncludes.html" | sed "s/__TITLE__/$V_TITLE/g" > "${V_EXPORT}.html"
 if [ -a "page_includes/${V_INCLUDE}.html" ]
 then
   cat "page_includes/${V_INCLUDE}.html" >> "${V_EXPORT}.html"
