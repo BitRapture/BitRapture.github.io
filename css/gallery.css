@@ -6,18 +6,32 @@
   justify-content: center;
   width: 100%;
   height: 100%;
+  visibility: visible;
+}
+
+#galleryView {
+  position: absolute;
+  top: 10%;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: var(--primary-color) solid 10px;
+  border-radius: 15px;
+  width: 60%;
+  height: 50%;
+  max-width: 800px;
+  visibility: hidden;
+  z-index: 1;
 }
 
 #gallery .item {
+  position: relative;
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border: var(--secondary-color) solid 10px;
   border-radius: 15px;
   margin: 40px;
-  width: 200px;
-  height: 200px;
-  max-width: 200px;
-  max-height: 200px;
+  min-width: 100px;
+  max-width: 300px;
 }
 
 #gallery .caption {
@@ -25,8 +39,12 @@
   text-align: center;
   background-color: var(--secondary-color);
   color: var(--primary-color);
-  width: 200px;
-  max-width: 200px;
+  width: 100%;
+}
+
+#gallery .item .preview {
+  width: 100%;
+  height: 100%;
 }
 
 #gallery img {
