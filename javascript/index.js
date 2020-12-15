@@ -21,7 +21,7 @@ function startTypeWriter(ID) {
   document.getElementById(ID).innerHTML = twContentV = twContent[twI];
   document.getElementById(ID).style.visibility = "visible";
   document.getElementById(ID).style.height = "auto";
-  typeWrite = setInterval(typeWriter, 50, ID);
+  typeWrite = setInterval(typeWriter, 35, ID);
 }
 
 function main() {
