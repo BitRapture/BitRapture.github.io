@@ -10,3 +10,15 @@
   text-align: center;
   width: 100%;
 }
+
+#index #typeWriterDesc {
+  visibility: hidden;
+  font-size: 15px;
+  height: 0px;
+}
+
+#index #typeWriterDescExtra {
+  visibility: hidden;
+  font-size: 15px;
+  height: 0px;
+}
