@@ -1,0 +1,34 @@
+#gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+#gallery .item {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: var(--secondary-color) solid 10px;
+  border-radius: 15px;
+  margin: 40px;
+  width: 200px;
+  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+#gallery .caption {
+  position: absolute;
+  text-align: center;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  width: 200px;
+  max-width: 200px;
+}
+
+#gallery img {
+  width: 100%;
+}
