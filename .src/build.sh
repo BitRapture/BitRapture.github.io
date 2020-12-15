@@ -12,6 +12,7 @@ read V_EXPORT
 cat "templates/header.html" | sed "s/__TITLE__/$V_TITLE/g" > "${V_EXPORT}.html"
 cat "page_content/${V_CONTENT}.html" >> "${V_EXPORT}.html"
 cat "templates/footer.html" >> "${V_EXPORT}.html"
+mv "${V_EXPORT}.html" ".."
 
 # Output success if no error is thrown
 echo "Done, created file: ${V_EXPORT}.html"
