@@ -10,11 +10,13 @@ function toggleNavList() {
     nav.style.visibility = "visible";
     nav.style.width = "200px";
     nav.style.minWidth = "200px";
+    nav.style.marginRight = "3px";
     navB.src = "media/buttons/navListButtonClose"+ ( rootColor === colorA || rootColor === "" ? "" : "Light") +".png";
   } else {
     nav.style.visibility = "hidden";
     nav.style.width = "0px";
     nav.style.minWidth = "0px";
+    nav.style.marginRight = "0px";
     navB.src = "media/buttons/navListButtonOpen"+ ( rootColor === colorA || rootColor === "" ? "" : "Light") +".png";
   }
 }
