@@ -33,6 +33,7 @@ iframe {
   padding-right: 15px;
   flex-direction: row;
   flex-wrap: wrap;
+  z-index: 2;
 }
 
 #header .container {
@@ -59,6 +60,7 @@ iframe {
   margin-right: 0px;
   flex-direction: column;
   visibility: hidden;
+  z-index: 2;
 }
 
 #navList .container {
