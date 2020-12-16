@@ -10,17 +10,39 @@
 }
 
 #galleryView {
+  display: flex;
+  flex-direction: row;
   position: absolute;
-  top: 10%;
+  top: 100px;
   background-color: var(--secondary-color);
   color: var(--primary-color);
-  border: var(--primary-color) solid 10px;
+  border: var(--secondary-color) solid 10px;
   border-radius: 15px;
-  width: 60%;
-  height: 50%;
-  max-width: 800px;
+  min-width: 49%;
   visibility: hidden;
   z-index: 1;
+}
+
+#galleryView #closeButton {
+  text-align: right;
+  font-size: 20px;
+}
+
+#galleryView #title {
+  font-size: 25px;
+  text-align: center;
+}
+
+#galleryView #desc {
+
+}
+
+#galleryView #linkButton {
+
+}
+
+#galleryView img {
+  width: 100%;
 }
 
 #gallery .item {
