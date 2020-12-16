@@ -36,7 +36,7 @@ iframe {
   z-index: 2;
 }
 
-#header .container {
+#flexBox #header .container {
   flex-grow: 1;
 }
 
@@ -52,7 +52,7 @@ iframe {
   flex-direction: row;
 }
 
-#main #navList {
+#flexBox #main #navList {
   display: flex;
   width: 0px;
   min-width: 0px;
@@ -63,7 +63,7 @@ iframe {
   z-index: 2;
 }
 
-#navList .container {
+#flexBox #main #navList .container {
   min-height: 20px;
   background-color: var(--primary-color);
   border-top: var(--secondary-color) solid 4px;
@@ -75,7 +75,7 @@ iframe {
   text-align: center;
 }
 
-#navList .container:hover {
+#flexBox #main #navList .container:hover {
   background-color: grey;
 }
 
@@ -85,7 +85,7 @@ iframe {
   color: var(--secondary-color);
 }
 
-#main #content {
+#flexBox #main #content {
   flex-grow: 1;
   color: var(--secondary-color);
 }
