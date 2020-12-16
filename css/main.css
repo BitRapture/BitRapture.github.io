@@ -90,6 +90,17 @@ iframe {
   color: var(--secondary-color);
 }
 
+.banner {
+  width: 100%;
+  text-align: center;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-size: 20px;
+  margin-top: 1%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
 #flexBox #footer {
   min-height: 15px;
   background-color: var(--secondary-color);
