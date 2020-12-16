@@ -1,0 +1,22 @@
+#raycaster {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  width: 100%;
+  margin-top: 2%;
+  align-items: center;
+}
+
+#raycaster iframe {
+  width: 100%;
+  height: 100%;
+  max-width: 640px;
+  max-height: 360px;
+}
+
+#raycaster #desc {
+  width: 60%;
+  max-width: 640px;
+  text-align: left;
+  margin-top: 10px;
+}
