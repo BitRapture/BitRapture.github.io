@@ -133,8 +133,11 @@ var kPL = {
       this.keys.splice(find, 1);
   },
   checkFocus() {
-    if (!document.hasFocus() && this.keys.length > 0)
-      this.keys = [];
+    if (document.activeElement !== canvas) {
+      if (this.keys.length > 0) this.keys = [];
+      return false;
+    }
+    return true;
   },
   keyPressed(key) {
     return this.keys.includes(key);
@@ -164,11 +167,14 @@ function main(cTime) {
   }
 
   // Make sure document is focused for keys
-  kPL.checkFocus();
+  // Get delta rotation or set if no focus
+  let dM, dR = -1;
+  if (kPL.checkFocus()) {
+    dR = kPL.keyPressed("ArrowLeft") - kPL.keyPressed("ArrowRight");
+  }
 
-  // Get delta movement and delta rotation
-  let dM = kPL.keyPressed("ArrowUp") - kPL.keyPressed("ArrowDown");
-  let dR = kPL.keyPressed("ArrowLeft") - kPL.keyPressed("ArrowRight");
+  // Get delta movement
+  dM = kPL.keyPressed("ArrowUp") - kPL.keyPressed("ArrowDown");
   // Apply movement and rotation
   rotateVec(player.dir, 0.02 * dR);
   rotateVec(camera, 0.02 * dR);
