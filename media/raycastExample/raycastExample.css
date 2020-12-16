@@ -1,7 +1,6 @@
 body {
   background-color: black;
-}
-
-.center {
-  text-align: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
