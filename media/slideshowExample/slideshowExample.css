@@ -1,0 +1,39 @@
+body {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+#slideshow {
+  display: flex;
+  flex-direction: column;
+  max-width: 850px;
+  height: 400px;
+}
+
+#slideshow #imagePanel {
+  text-align: center;
+  margin-bottom: 4px;
+  min-height: 400px;
+  height: 100%;
+}
+
+#slideshow #imagePanel img {
+  height: 100%;
+  width: auto;
+}
+
+#slideshow #navButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-top: black solid 5px;
+}
+
+#slideshow #navButtons a {
+  text-decoration: underline;
+  margin-top: 4px;
+  font-size: 20px;
+  color: black;
+}
