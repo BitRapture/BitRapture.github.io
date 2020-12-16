@@ -19,9 +19,11 @@ function previewContent(item) {
   let title = document.createElement("div");
   let desc = document.createElement("div");
   let button = document.createElement("div");
+  let buttonButton = document.createElement("div");
+  let buttonLink = document.createElement("a");
 
   infoPane.style.width = "40%";
-  infoPane.style.minHeight = "400px";
+  infoPane.style.minHeight = "300px";
   imagePane.style.width = "60%";
   viewImage.src = galleryItem.image;
   viewImage.alt = galleryItem.name;
@@ -30,15 +32,21 @@ function previewContent(item) {
   closeLink.setAttribute("onclick", "closePreview()");
   title.id = "title";
   desc.id = "desc";
-  button.id = "button";
+  buttonButton.id = "button";
+  buttonLink.href = galleryItem.link;
 
+  buttonLink.appendChild(document.createTextNode("["+ galleryItem.linkdesc +"]"));
   closeLink.appendChild(document.createTextNode("[close]"));
   closeButton.appendChild(closeLink);
   imagePane.appendChild(viewImage);
   infoPane.appendChild(closeButton);
+  buttonButton.appendChild(buttonLink);
+  button.appendChild(buttonButton);
   infoPane.appendChild(title);
   infoPane.appendChild(desc);
-  infoPane.appendChild(button);
+  if (galleryItem.link !== "" && typeof galleryItem.link !== "undefined") {
+    infoPane.appendChild(button);
+  }
   title.appendChild(document.createTextNode(galleryItem.name));
   desc.appendChild(document.createTextNode(galleryItem.desc));
   view.appendChild(imagePane);
