@@ -47,6 +47,8 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
     sDistY = ((mapY + 1) - pY) * drY;
   }
 
+  cam.wallColor = 0;
+
   // Calculation of the ray intersection, keeps stepping until it either
   // intersects with a wall or goes out of bounds
   let axis = 0, intersect = false;
@@ -63,6 +65,7 @@ function calculateIntersect(map, pX, pY, rX, rY, cam) {
 
     if (map.walls[getI(mapX, mapY, map.w)] !== 0) {
       intersect = true;
+      cam.wallColor = map.walls[getI(mapX, mapY, map.w)];
       break;
     }
   }
@@ -97,25 +100,25 @@ var player = {
 // alter any projected content on the screen
 var camera = {
   x : 0, y : 0.78,
-  axisFlag : 0
+  axisFlag : 0, wallColor : 0
 }
 // various map flags, variables and objects with individual map arrays and
 // level starting positions
 var mapStart = true;
 var maps = {
   debug : {
-    w : 10, pX : 3,
-    h : 10, pY : 3,
+    w : 10, pX : 5,
+    h : 10, pY : 5,
     walls : [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 1, 0, 1, 0, 0, 0, 0, 0, 1,
+      1, 1, 0, 0, 1, 1, 1, 1, 0, 1,
       1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-      1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+      1, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+      1, 1, 0, 0, 0, 0, 0, 0, 1, 1,
+      1, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 1, 0, 1, 0, 1, 1,
       1, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-      1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-      1, 0, 0, 0, 0, 0, 1, 0, 1, 1,
-      1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
+      1, 0, 1, 1, 0, 0, 0, 1, 0, 1,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1
     ]
   }
@@ -164,6 +167,12 @@ function main(cTime) {
     player.x = maps.debug.pX;
     player.y = maps.debug.pY;
     mapStart = false;
+
+    // Debug randomize colours!
+    for (let i = 0; i < maps.debug.walls.length; ++i) {
+      if (maps.debug.walls[i] > 0)
+        maps.debug.walls[i] = Math.floor(Math.random() * 0xffffff);
+    }
   }
 
   // Make sure document is focused for keys
@@ -176,16 +185,16 @@ function main(cTime) {
   // Get delta movement
   dM = kPL.keyPressed("ArrowUp") - kPL.keyPressed("ArrowDown");
   // Apply movement and rotation
-  rotateVec(player.dir, 0.02 * dR);
-  rotateVec(camera, 0.02 * dR);
+  rotateVec(player.dir, 0.015 * dR);
+  rotateVec(camera, 0.015 * dR);
   player.x += (player.dir.x * 0.03) * dM;
   player.y += (player.dir.y * 0.03) * dM;
 
   // Clear screen (add ceiling)
-  ctx.fillStyle = "rgb(80, 80, 80)";
+  ctx.fillStyle = "rgb(155, 236, 242)";
   ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
   // Add floor
-  ctx.fillStyle = "rgb(50, 50, 50)";
+  ctx.fillStyle = "rgb(29, 39, 41)";
   ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
 
   // Update raycast
@@ -202,14 +211,15 @@ function main(cTime) {
       drawE = wallDist / 2 + canvas.height / 2;
     if (drawS < 0) drawS = 0;
     if (drawE > canvas.height) drawE = canvas.height;
-    let wallCol = ((wallDist / (camera.axisFlag ? 200 : 255)) * 255);
+    if (camera.axisFlag) camera.wallColor ^= 0x101010;
 
-    ctx.strokeStyle = `rgb(${wallCol}, ${wallCol}, ${wallCol})`;
+    ctx.strokeStyle = "#" + camera.wallColor.toString(16);
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(i, drawS);
     ctx.lineTo(i, drawE + 1);
     ctx.stroke();
+    ctx.strokeStyle = "white";
   }
 
   // Debug fps counter
