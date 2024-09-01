@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=false">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sono&display=swap" rel="stylesheet">
+
+    <title>BitRapture</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="javascript/text-shift.js"></script>
+    <script src="javascript/scroller.js"></script>
+</head>
+
+<body>
+    <div class="controls">
+        <a id="pageUp" href="#" onclick="scrollPrevious(); return false;"><div class="box hover">↑</div></a>
+        <a a id="pageDown" href="#" onclick="scrollNext(); return false;"><div class="box invert hover">↓</div></a>
+    </div>
+
+    <div class="scrollable">
+        <!-- Header -->
+        <div class="container vertical">
+            <div class="box" style="padding-left: 1.1em; padding-right: 1.1em;">
+                <h1 class="textShift">[BitRapture]</h1>
+            </div>
+        </div>
+        <div class="separator" style="padding-bottom:15.5vh"></div>
+        
+        <!-- About -->
+        <div class="container horizontal">
+            <div class="container vertical controlBox" style="--widthMax:fit-content; --width:600px;">
+                <div><h2>About</h2></div>
+                <div><h3>
+                    <p>
+                        Solo UK indie game developer and software engineer. Here you will find my projects, achievements, and acknowledgements.
+                    </p>
+                    <p>
+                        Born and raised in England, graduated Bournemouth University with a First Class honours in BSc Games Software Engineering.
+                        I've always enjoyed coding, game development is my favorite outlet for it.
+                    </p>
+                </h3></div>
+            </div>
+            <div class="separator"></div>
+            <img class="controlBox" style="--widthMax:300px; --heightMax:300px; --width:100%; --height:100%;" src="media/logo.jpg"/>
+        </div>
+    </div>
+    <div class="spacer"></div>
+
+    <!-- Projects -->
+    <div class="scrollable">
+        <div class="container vertical">
+            <div class="box" style="padding-left: 1.1em; padding-right: 1.1em;"><h2>Projects</h2></div>
+        </div>
+        <div class="separator"></div>
+
+        <div class="container vertical">
+            <div class="bgVideo">
+                <iframe src="https://www.youtube.com/embed/lAaOA5yXL-M ?autoplay=1&mute=1&controls=0&loop=1&playlist=lAaOA5yXL-M " 
+                        frameBorder="0" 
+                        allow="autoplay"></iframe>
+                <div class="controlBox box" style="--widthMax:fit-content; --width:60%;">
+                    <div><h2>Game: What Goes Around Comes Around</h2></div>
+                    <div><h3>
+                        <p>
+                            Created for a 48 hour University Game Jam with the theme "Loop". I worked in a team of two as a co-developer, we created 
+                            a First Person Shooter where projectiles orbit around a small planet that the player must avoid. Each wave lets the player 
+                            choose an upgrade to combat the increasing number of enemies.
+                        </p>
+                        <p>
+                            This project was made in Unity using C#. I implemented the projectiles, planet-based gravity, minimap, and wave system.
+                            We won 3rd place overall which I'm very proud of!
+                        </p>
+                        <p>
+                            <a href="https://utld-games.itch.io/what-goes-around-comes-around" target="_blank">Play Here</a>
+                        </p>
+                    </h3></div>
+                </div>
+            </div>
+        </div>
+        <div class="separator"></div>
+
+        <div class="container vertical">
+            <div class="bgVideo">
+                <iframe src="https://www.youtube.com/embed/PqwA3-8WDJ8?autoplay=1&mute=1&controls=0&loop=1&playlist=PqwA3-8WDJ8" 
+                        frameBorder="0" 
+                        allow="autoplay"></iframe>
+                <div class="controlBox box" style="--widthMax:fit-content; --width:60%;">
+                    <div><h2>Game: The Wild Frontier</h2></div>
+                    <div><h3>
+                        <p>
+                            Created for a 48 hour University Game Jam with the theme "Centenary". I worked in a team of four as one of
+                            the lead developers, we created a city building game set in the wild west where you must maintain your 
+                            town for a hundred in-game years. I implemented the grid-placement, building selection, camera movement, and post-processing. 
+                        </p>
+                        <p>
+                            This project was made in Unity using C#. Working in a team with distinguished roles really let this project come together.
+                            It was a fun experience delegating tasks and connecting other team members work together!
+                        </p>
+                        <p>
+                            <a href="https://utld-games.itch.io/the-wild-frontier" target="_blank">Play Here</a>
+                        </p>
+                    </h3></div>
+                </div>
+            </div>
+        </div>
+        <div class="separator"></div>
+
+        <div class="container box vertical">
+            <img class="controlBox" style="--widthMax:600px; --heightMax:600px; --width:100%; --height:100%;" src="media/projects/gm48SmallWorld.gif"/>
+            <div class="controlBox" style="--widthMax:fit-content; --width:60%;">
+                <div><h2>Game: INHABITED</h2></div>
+                <div><h3>
+                    <p>
+                        Created for a 48 hour GameMaker game jam with the theme "Small World". I decided to create a small horror game
+                        where you play as a survivor of a ship crash. To win you must collect all the power cells that are scattered
+                        on this small planet whilst evading the monster by shining your flashlight at it. I created everything; code,
+                        sound effects, story, and artwork.
+                    </p>
+                    <p>
+                        Created back in 2020, I used GameMaker Language (which has a C-style syntax) for the logic, and OpenGL to
+                        create the shadow masking shader. I achieved 11th place out of 69. Fun fact, all sound effects were made with my
+                        voice! 
+                    </p>
+                    <p>
+                        <a href="https://gm48.net/game-jams/small-world/games/inhabited" target="_blank">Play Here</a>
+                    </p>
+                </h3></div>
+            </div>
+        </div>
+    </div>
+    <div class="spacer"></div>
+
+    <!-- Acknowledgements -->
+    <div class="scrollable">
+        <div class="container vertical">
+            <div class="box" style="padding-left: 1.1em; padding-right: 1.1em;"><h2>Acknowledgements</h2></div>
+        </div>
+        <div class="separator"></div>
+
+        <div class="container box vertical">
+            <div class="bgImage" style="--image: url(https://lumiere-a.akamaihd.net/v1/images/lego-star-wars-battles-key-art_tall-2197622911_660e4729.jpeg); background-position-y: 50%;">
+                <div class="controlBox box" style="--widthMax:fit-content; --width:60%;">
+                    <div><h2>Lego Star Wars Battles</h2></div>
+                    <div><h3>
+                        <p>
+                            Credited as a Programmer.
+                        </p>
+                        <p>
+                            2022 to 2023 employed at TT Games. I helped maintain and implemented features, both client-side and server-side.
+                            Notable skills: feature leading, unit-testing, multi-platform deployment, mobile deployment, C#, 
+                            Unity, Git, Jira.
+                        </p>
+                        <p>
+                            <a href="https://apps.apple.com/us/app/lego-star-wars-battles/id1563174698" target="_blank">Play Here</a>
+                        </p>
+                    </h3></div>
+                </div>
+            </div>
+        </div>
+        <div class="separator"></div>
+
+        <div class="container box vertical">
+            <div class="bgImage" style="--image: url(https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/745010/capsule_616x353.jpg);">
+                <div class="controlBox box" style="--widthMax:fit-content; --width:60%;">
+                    <div><h2>Mechanic Miner</h2></div>
+                    <div><h3>
+                        <p>
+                            Credited for Alpha and Beta testing, as well as helping out moderate their community Discord. 
+                            Mechanic Miner is a 2D physics sandbox survival game where the player must build contraptions to progress.
+                        </p>
+                        <p>
+                            Additionally I made a bunch of mods in Lua such as logic-gates, a fully-functioning microcontroller, and disco blocks.
+                            I also reverse-engineered their resource files to create a texture pack tool in C++.
+                        </p>
+                        <p>
+                            <a href="https://store.steampowered.com/app/745010/Mechanic_Miner/" target="_blank">Play Here</a>
+                            <a href="https://github.com/BitRapture/MechanicMiner-Mod-Tool" target="_blank">Texture Repo (Old Code!)</a>
+                        </p>
+                    </h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="spacer"></div>
+
+    <!-- Links -->
+    <div class="scrollable">
+        <div class="container vertical">
+            <div class="box" style="padding-left: 1.1em; padding-right: 1.1em;"><h2>Links</h2></div>
+        </div>
+        <div class="separator"></div>
+
+        <div class="container horizontal" style="gap:1.5em; flex-wrap: wrap;">
+            <div class="linkImage"><a href="https://www.linkedin.com/in/georgesmith-gamedev/" target="_blank"><img src="media/links/LinkedIn-Icon-Dark.png"/></a></div>
+            <div class="linkImage"><a href="https://github.com/bitrapture" target="_blank"><img src="media/links/GitHub_Invertocat_Logo.svg.png" style="filter: invert();"/></a></div>
+            <div class="linkImage"><a href="https://bitrapture.itch.io/" target="_blank"><img src="media/links/itch-io-logo-43B308E6B7-seeklogo.com.png" style="filter: invert();"/></a></div>
+            <div class="linkImage"><a href="https://www.youtube.com/@bitrapture" target="_blank"><img src="media/links/White-YouTube-Logo-Transparent.png"/></a></div>
+            <div class="linkImage"><a href="https://twitter.com/bitrapture" target="_blank"><img src="media/links/twitter-icon.webp" style="filter: invert();"/></a></div>
+            <div class="linkImage"><a href="https://discord.com/invite/B894svH" target="_blank"><img src="media/links/discord-mark-white.png"/></a></div>
+        </div>
+    </div>
+    <div class="spacer"></div>
+</body>

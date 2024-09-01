@@ -1,0 +1,217 @@
+:root {
+    --main-alpha: rgba(0, 0, 0, 0.7);
+}
+
+body {
+    font-family: "Sono", monospace;
+    font-optical-sizing: auto;
+    font-variation-settings: "MONO" 1;
+    font-weight: 400;
+    font-style: normal;
+    background-color: white;
+    color: black;
+    margin-right: 2.5vw;
+    margin-left: 2.5vw;
+}
+
+html {
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+p a {
+    background-color: white;
+    border-style:dashed;
+    border-radius: 0.5rem;
+    color: black;
+    text-decoration: none;
+}
+
+.controlBox {
+    max-width: var(--widthMax);
+    max-height: var(--heightMax);
+    width: var(--width); 
+    height: var(--height);
+    text-align: center;
+    overflow: clip;
+    z-index: 2;
+}
+
+.box {
+    background-color: black;
+    color: white;
+    padding: 0.05em;
+    z-index: 1;
+}
+
+.box.invert {
+    background-color: white;
+    color: black;
+}
+
+.box.hover:hover {
+    background-color: yellow;
+    color: black;
+}
+
+.bgVideo {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    width: 100%;
+    min-height: 800px;
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+}
+
+.bgVideo iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+
+    @container (min-aspect-ratio: 16/9) {
+        height: 56.25cqw;
+    }
+    
+    @container (max-aspect-ratio: 16/9) {
+        width: 177.78cqh;
+    }
+
+    top: 50%;
+    transform: translateY(-50%);
+    filter: blur(0.125rem);
+}
+
+.bgVideo .box {
+    filter: drop-shadow(0 0 1.5rem var(--main-alpha));
+    box-shadow: 0 0 1.5rem 1.5rem var(--main-alpha);
+    background-color: var(--main-alpha);
+}
+
+.bgVideo::after {
+    content:'';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 95%);
+    box-shadow: 0 0 1.5rem 4px black inset;
+}
+
+.spacer {
+    padding-bottom: 100vh;
+}
+
+.separator {
+    padding-bottom: 24px;
+    padding-right: 5%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.containerWrap {
+    flex-wrap: wrap;
+}
+
+.horizontal {
+    flex-direction: row;
+    align-items: center;
+}
+
+.vertical {
+    flex-direction: column;
+    align-items: center;
+}
+
+.scrollable {
+    scroll-margin-top: 1vh;
+    scroll-snap-align: start;
+}
+
+.controls {
+    position: fixed;
+    bottom: 1.5%;
+    right: 0.75%;
+    z-index: 10;
+    border: 4px black solid;
+}
+
+.controls div {
+    text-align: center;
+    font-size: 60px;
+    width: 60px;
+    height: 100%;
+}
+
+.controls a {
+    user-select: none;
+    text-decoration: none;
+    color: inherit;
+}
+
+.bgImage {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    background-image: var(--image);
+    background-size: cover;
+    background-position-y: 15%;
+    background-position-x: center;
+    width: 100%;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bgImage::after {
+    content:'';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 95%);
+    box-shadow: 0 0 1.5rem 4px black inset;
+}
+
+.bgImage .box {
+    filter: drop-shadow(0 0 1.5rem var(--main-alpha));
+    box-shadow: 0 0 1.5rem 1.5rem var(--main-alpha);
+    background-color: var(--main-alpha);
+}
+
+.linkImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: black;
+    width: 120px;
+    height: 120px;
+    border: 20px black solid;
+    border-radius: 20%;
+}
+
+.linkImage img {
+    width: 100%;
+    height: min-content;
+}
